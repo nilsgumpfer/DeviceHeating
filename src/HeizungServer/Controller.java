@@ -35,8 +35,8 @@ public class Controller {
     private Button btn_stoppeServer;
     @FXML
     private TextArea ta_srvlog;
-    @FXML
-    private Label lbl_heizungtemp;
+    /*@FXML
+    private Label lbl_heizungtemp;*/
 
     @FXML
     private Button btn_setTemp;
@@ -86,7 +86,7 @@ public class Controller {
         lbl_Serverip.setText(heiz1.getServerIP());
         lbl_Servername.setText(heiz1.heizungname);
         lbl_Serverstatus.setText(heiz1.serverstatus);
-        lbl_heizungtemp.textProperty().bind(heiz1.heizungstemperatur);
+        //lbl_heizungtemp.textProperty().bind(heiz1.heizungstemperatur);
 
         StringBuilder sb = new StringBuilder();
         sb.append("");

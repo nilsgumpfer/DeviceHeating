@@ -5,13 +5,11 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HeizungServer.Controller">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HeizungServer.Controller">
    <children>
       <Label layoutX="14.0" layoutY="27.0" text="Heizung Server">
          <font>
@@ -36,16 +34,6 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ImageView fitHeight="63.0" fitWidth="25.0" layoutX="455.0" layoutY="1.0">
-                           <image>
-                              <Image url="@thermometer.png" />
-                           </image>
-                        </ImageView>
-                        <Label fx:id="lbl_heizungtemp" layoutX="488.0" layoutY="24.0" text="0°C">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
                         <Button fx:id="btn_setTemp" layoutX="454.0" layoutY="73.0" mnemonicParsing="false" onAction="#BTNSetTemp" text="Set Temperature" />
                         <Button fx:id="btn_getTemp" layoutX="454.0" layoutY="98.0" mnemonicParsing="false" onAction="#BTNGetTemp" text="Get Temperature" />
                      </children></AnchorPane>
