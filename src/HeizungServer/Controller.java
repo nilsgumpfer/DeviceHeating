@@ -128,11 +128,12 @@ public class Controller {
         }
     }
 
-    public void BTNGetTemp(ActionEvent event)throws RemoteException{
+    public void BTNGetInfo(ActionEvent event)throws RemoteException{
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information");
-        alert.setHeaderText("Aktuelle Temperatur der Heizung");
-        String aktuelleTemp = String.valueOf(heiz1.getTemperatureSrv());
+        alert.setHeaderText("Aktuelle Einstellungen der Heizung");
+        String aktuelleTemp = String.valueOf("Aktuelle Temperatur: " + heiz1.getTemperatureSrv() + " °C \n Maximale Temperatur: " + heiz1.getMaxTemperatureSrv()+ " °C \n Minimale Temperatur: "
+        + heiz1.getMinTemperatureSrv() + " °C \n Maximaler Wasserstand: " + heiz1.getMaxWaterlevelSrv() + " l \n Minimaler Wasserstand: " + heiz1.getMinWaterlevelSrv() + " l \n Status: " + heiz1.getStatusSrv());
 
         alert.setContentText(aktuelleTemp);
 

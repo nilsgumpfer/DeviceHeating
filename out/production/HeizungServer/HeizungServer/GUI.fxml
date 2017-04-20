@@ -35,7 +35,7 @@
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <Button fx:id="btn_setTemp" layoutX="454.0" layoutY="73.0" mnemonicParsing="false" onAction="#BTNSetTemp" text="Set Temperature" />
-                        <Button fx:id="btn_getTemp" layoutX="454.0" layoutY="98.0" mnemonicParsing="false" onAction="#BTNGetTemp" text="Get Temperature" />
+                        <Button fx:id="btn_getTemp" layoutX="454.0" layoutY="98.0" mnemonicParsing="false" onAction="#BTNGetInfo" text="Get Info" />
                      </children></AnchorPane>
               </content>
             </Tab>

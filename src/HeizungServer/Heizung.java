@@ -7,6 +7,7 @@ import HeizungServer.interfaces.HeizungClientInterface;
 import HeizungServer.interfaces.HeizungServerInterface;
 import HeizungServer.observer.AObservable;
 import HeizungServer.observer.IObserver;
+import de.thm.smarthome.global.enumeration.ResponseCode;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -32,6 +33,11 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
     public ByteArrayOutputStream srvlog = null;
     public Registry rmiRegistry;
     public Double temperature = 0.00;
+    public Double maxTemperature = 0.00;
+    public Double minTemperature = 0.00;
+    public Double maxWaterlevel = 0.00;
+    public Double minWaterlevel = 0.00;
+    public String status = "-";
     public StringProperty heizungstemperatur = new SimpleStringProperty("0.00 °C");
 
     public Heizung() {
@@ -75,6 +81,92 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
         return this.heizungname;
     }
 
+    @Override
+    public double getMaxTemperature(HeizungClientInterface c) throws RemoteException {
+        return this.maxTemperature;
+    }
+
+    @Override
+    public double getMinTemperature(HeizungClientInterface c) throws RemoteException {
+        return this.minTemperature;
+    }
+
+    @Override
+    public double getMaxWaterlevel(HeizungClientInterface c) throws RemoteException {
+        return this.maxWaterlevel;
+    }
+
+    @Override
+    public double getMinWaterlevel(HeizungClientInterface c) throws RemoteException {
+        return minWaterlevel;
+    }
+
+    @Override
+    public boolean setMaxWaterlevel(double max_wl, HeizungClientInterface c) throws RemoteException {
+        maxWaterlevel = max_wl;
+        return true;
+    }
+
+    @Override
+    public boolean setMinWaterlevel(double min_wl, HeizungClientInterface c) throws RemoteException {
+        minWaterlevel = min_wl;
+        return true;
+    }
+
+    @Override
+    public boolean setMaxTemperature(double max_temp, HeizungClientInterface c) throws RemoteException {
+        maxTemperature = max_temp;
+        return true;
+    }
+
+    @Override
+    public boolean setMinTemperature(double min_temp, HeizungClientInterface c) throws RemoteException {
+        minTemperature = min_temp;
+        return true;
+    }
+
+    @Override
+    public void standby(HeizungClientInterface c) throws RemoteException {
+    status = "Standby";
+    }
+
+    @Override
+    public void wakeUp(HeizungClientInterface c) throws RemoteException {
+    status = "On";
+    }
+
+    @Override
+    public ResponseCode switchOn(HeizungClientInterface c) throws RemoteException {
+        if(!status.equals("On")){
+            status = "On";
+            return ResponseCode.SwitchedOn;
+        }
+        else{
+            return ResponseCode.AlreadySwitchedOn;
+        }
+
+    }
+
+    @Override
+    public ResponseCode switchOff(HeizungClientInterface c) throws RemoteException {
+        if(!status.equals("Off")){
+            status = "Off";
+            return ResponseCode.SwitchedOff;
+        }
+        else{
+            return ResponseCode.AlreadySwitchedOff;
+        }
+
+    }
+
+    @Override
+    public String getStatus(HeizungClientInterface c) throws RemoteException {
+        return this.status;
+    }
+
+    public String getStatusSrv(){
+        return this.status;
+    }
 
 
     public String startServer(String heizungname) throws RemoteException {
@@ -93,6 +185,7 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
             Naming.rebind("//127.0.0.1/"+heizungname, this);
             this.heizungname = heizungname;
             this.serverstatus = "Gestartet";
+            status = "On";
             return "Server ist gestartet!";
 
 
@@ -145,6 +238,7 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
             //UnicastRemoteObject.unexportObject(myService, true);
             UnicastRemoteObject.unexportObject(rmiRegistry, true);
             this.serverstatus = "Gestoppt";
+            status = "Off";
             return "Server ist gestoppt!";
 
         } catch (NoSuchObjectException e)
@@ -160,6 +254,25 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
             return "Fehler beim Stoppen des Servers!";
         }
 
+    }
+
+
+
+    public double getMaxTemperatureSrv(){
+        return this.maxTemperature;
+    }
+
+
+    public double getMinTemperatureSrv() throws RemoteException {
+        return this.minTemperature;
+    }
+
+    public double getMaxWaterlevelSrv() throws RemoteException {
+        return this.maxWaterlevel;
+    }
+
+    public double getMinWaterlevelSrv() throws RemoteException {
+        return minWaterlevel;
     }
 
     }
