@@ -1,5 +1,6 @@
 package HeizungServer;
 
+import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -72,13 +73,21 @@ public class Controller {
             heiz1 = new Heizung();
         }
 
-        /*ps = new PrintStream(new OutputStream() {
+        ps = new PrintStream(new OutputStream() {
+
             @Override
             public void write(int i) throws IOException {
-                ta_srvlog.appendText(String.valueOf((char) i));
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        ta_srvlog.appendText(String.valueOf((char) i));
+                    }
+                });
+
+
             }
         });
-        System.setOut(ps);*/
+        System.setOut(ps);
 
         /*Server wird gestartet*/
 
