@@ -34,8 +34,21 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="btn_setTemp" layoutX="454.0" layoutY="73.0" mnemonicParsing="false" onAction="#BTNSetTemp" text="Set Temperature" />
-                        <Button fx:id="btn_getTemp" layoutX="454.0" layoutY="98.0" mnemonicParsing="false" onAction="#BTNGetInfo" text="Get Info" />
+                        <Button fx:id="btn_setTemp" layoutX="14.0" layoutY="38.0" mnemonicParsing="false" onAction="#BTNSetTemp" text="Set Temperature" />
+                        <Label layoutX="14.0" layoutY="23.0" text="Temperature:" />
+                        <Label fx:id="lbl_temp" layoutX="140.0" layoutY="23.0" text="-" />
+                        <Label fx:id="lbl_maxtemp" layoutX="140.0" layoutY="74.0" text="-" />
+                        <Label fx:id="lbl_mintemp" layoutX="140.0" layoutY="124.0" text="-" />
+                        <Label layoutX="14.0" layoutY="74.0" text="Max. Temperature:" />
+                        <Label layoutX="430.0" layoutY="23.0" text="Max. Waterlevel" />
+                        <Label fx:id="lbl_maxwl" layoutX="549.0" layoutY="23.0" text="-" />
+                        <Label fx:id="lbl_minwl" layoutX="549.0" layoutY="74.0" text="-" />
+                        <Label layoutX="15.0" layoutY="124.0" text="Min. Temperature:" />
+                        <Label layoutX="431.0" layoutY="74.0" text="Min. Waterlevel" />
+                        <Button fx:id="btn_setMaxTemp" layoutX="14.0" layoutY="90.0" mnemonicParsing="false" onAction="#BTNSetMaxTemp" text="Set Max. Temperature" />
+                        <Button fx:id="btn_setMinTemp" layoutX="14.0" layoutY="141.0" mnemonicParsing="false" onAction="#BTNSetMinTemp" text="Set Min. Temperature" />
+                        <Button fx:id="btn_setMaxWL" layoutX="430.0" layoutY="38.0" mnemonicParsing="false" onAction="#BTNSetMaxWL" text="Set Max. Waterlevel" />
+                        <Button fx:id="btn_setMinWL" layoutX="430.0" layoutY="90.0" mnemonicParsing="false" onAction="#BTNSetMinWL" text="Set Min. Waterlevel" />
                      </children></AnchorPane>
               </content>
             </Tab>

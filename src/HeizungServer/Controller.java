@@ -36,11 +36,29 @@ public class Controller {
     private Button btn_stoppeServer;
     @FXML
     private TextArea ta_srvlog;
-    /*@FXML
-    private Label lbl_heizungtemp;*/
+
+
+    @FXML
+    private Label lbl_temp;
+    @FXML
+    private Label lbl_maxtemp;
+    @FXML
+    private Label lbl_mintemp;
+    @FXML
+    private Label lbl_maxwl;
+    @FXML
+    private Label lbl_minwl;
 
     @FXML
     private Button btn_setTemp;
+    @FXML
+    private Button btn_setMaxTemp;
+    @FXML
+    private Button btn_setMinTemp;
+    @FXML
+    private Button btn_setMaxWL;
+    @FXML
+    private Button btn_setMinWL;
 
     public static PrintStream ps;
 
@@ -95,7 +113,12 @@ public class Controller {
         lbl_Serverip.setText(heiz1.getServerIP());
         lbl_Servername.setText(heiz1.heizungname);
         lbl_Serverstatus.setText(heiz1.serverstatus);
-        //lbl_heizungtemp.textProperty().bind(heiz1.heizungstemperatur);
+
+        lbl_temp.textProperty().bind(heiz1.heizungstemperatur);
+        lbl_maxtemp.textProperty().bind(heiz1.maxheizungstemperatur);
+        lbl_mintemp.textProperty().bind(heiz1.minheizungstemperatur);
+        lbl_maxwl.textProperty().bind(heiz1.maxwaterlevel);
+        lbl_minwl.textProperty().bind(heiz1.minwaterlevel);
 
         StringBuilder sb = new StringBuilder();
         sb.append("");
@@ -137,15 +160,71 @@ public class Controller {
         }
     }
 
-    public void BTNGetInfo(ActionEvent event)throws RemoteException{
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information");
-        alert.setHeaderText("Aktuelle Einstellungen der Heizung");
-        String aktuelleTemp = String.valueOf("Aktuelle Temperatur: " + heiz1.getTemperatureSrv() + " °C \n Maximale Temperatur: " + heiz1.getMaxTemperatureSrv()+ " °C \n Minimale Temperatur: "
-        + heiz1.getMinTemperatureSrv() + " °C \n Maximaler Wasserstand: " + heiz1.getMaxWaterlevelSrv() + " l \n Minimaler Wasserstand: " + heiz1.getMinWaterlevelSrv() + " l \n Status: " + heiz1.getStatusSrv());
+    public void BTNSetMaxTemp(ActionEvent event){
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Maximale Temperatur einstellen");
+        dialog.setHeaderText("Maximale Temperatur der Heizung einstellen");
+        dialog.setContentText("Bitte maximale Temperatur der Heizung einstellen:");
+        Optional<String> result = dialog.showAndWait();
 
-        alert.setContentText(aktuelleTemp);
+        if(result.isPresent() == true && !result.get().equals("")) {
+            Double newTemp = Double.parseDouble(result.get());
+            System.out.println(newTemp);
+            heiz1.setMaxTemperatureSrv(newTemp);
+        }
+        else{
+            return;
+        }
+    }
 
-        alert.showAndWait();
+    public void BTNSetMinTemp(ActionEvent event){
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Minimalste Temperatur einstellen");
+        dialog.setHeaderText("Minimalste Temperatur der Heizung einstellen");
+        dialog.setContentText("Bitte minimalste Temperatur der Heizung einstellen:");
+        Optional<String> result = dialog.showAndWait();
+
+        if(result.isPresent() == true && !result.get().equals("")) {
+            Double newTemp = Double.parseDouble(result.get());
+            System.out.println(newTemp);
+            heiz1.setMinTemperatureSrv(newTemp);
+        }
+        else{
+            return;
+        }
+    }
+
+    public void BTNSetMaxWL(ActionEvent event){
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Maximales Wasserlevel einstellen");
+        dialog.setHeaderText("Maximalstes Wasserlevel der Heizung einstellen");
+        dialog.setContentText("Bitte maximalstes Wasserlevel der Heizung einstellen:");
+        Optional<String> result = dialog.showAndWait();
+
+        if(result.isPresent() == true && !result.get().equals("")) {
+            Double newMaxWL = Double.parseDouble(result.get());
+            System.out.println(newMaxWL);
+            heiz1.setMaxWaterlevelSrv(newMaxWL);
+        }
+        else{
+            return;
+        }
+    }
+
+    public void BTNSetMinWL(ActionEvent event){
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Minimales Wasserlevel einstellen");
+        dialog.setHeaderText("Minimalstes Wasserlevel der Heizung einstellen");
+        dialog.setContentText("Bitte minimalstes Wasserlevel der Heizung einstellen:");
+        Optional<String> result = dialog.showAndWait();
+
+        if(result.isPresent() == true && !result.get().equals("")) {
+            Double newMinWL = Double.parseDouble(result.get());
+            System.out.println(newMinWL);
+            heiz1.setMinWaterlevelSrv(newMinWL);
+        }
+        else{
+            return;
+        }
     }
 }

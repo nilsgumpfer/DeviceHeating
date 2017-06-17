@@ -38,7 +38,12 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
     public Double maxWaterlevel = 0.00;
     public Double minWaterlevel = 0.00;
     public String status = "-";
+
     public StringProperty heizungstemperatur = new SimpleStringProperty("0.00 °C");
+    public StringProperty maxheizungstemperatur = new SimpleStringProperty("0.00 °C");
+    public StringProperty minheizungstemperatur = new SimpleStringProperty("0.00 °C");
+    public StringProperty maxwaterlevel = new SimpleStringProperty("0 l");
+    public StringProperty minwaterlevel = new SimpleStringProperty("0 l");
 
     public Heizung() {
 
@@ -59,7 +64,7 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
 
     public void setTemperatureSrv(double temperature) {
         this.temperature = temperature;
-        String neueTemp = String.valueOf(this.temperature);
+        String neueTemp = String.valueOf(this.temperature + " °C");
         heizungstemperatur.set(neueTemp);
         notifyObservers(this.temperature);
     }
@@ -104,25 +109,71 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
     @Override
     public boolean setMaxWaterlevel(double max_wl, HeizungClientInterface c) throws RemoteException {
         maxWaterlevel = max_wl;
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                maxwaterlevel.set(String.valueOf(maxWaterlevel) + " l");}});
+        notifyObservers(this.maxWaterlevel);
         return true;
+    }
+
+    public void setMaxWaterlevelSrv(double max_wl){
+        maxWaterlevel = max_wl;
+        maxwaterlevel.set(String.valueOf(maxWaterlevel) + " l");
     }
 
     @Override
     public boolean setMinWaterlevel(double min_wl, HeizungClientInterface c) throws RemoteException {
         minWaterlevel = min_wl;
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                minwaterlevel.set(String.valueOf(minWaterlevel) + " l");}});
+        notifyObservers(this.minWaterlevel);
         return true;
+    }
+
+    public void setMinWaterlevelSrv(double min_wl){
+        minWaterlevel = min_wl;
+        minwaterlevel.set(String.valueOf(minWaterlevel) + " l");
     }
 
     @Override
     public boolean setMaxTemperature(double max_temp, HeizungClientInterface c) throws RemoteException {
         maxTemperature = max_temp;
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                maxheizungstemperatur.set(maxTemperature + " °C");
+            }
+        });
+
+        notifyObservers(maxTemperature);
         return true;
+    }
+
+    public void setMaxTemperatureSrv(double max_temp) {
+        maxTemperature = max_temp;
+        maxheizungstemperatur.set(String.valueOf(maxTemperature) + " °C");
     }
 
     @Override
     public boolean setMinTemperature(double min_temp, HeizungClientInterface c) throws RemoteException {
         minTemperature = min_temp;
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                minheizungstemperatur.set(minTemperature + " °C");
+            }
+        });
+
+        notifyObservers(minTemperature);
         return true;
+    }
+
+    public void setMinTemperatureSrv(double min_temp) {
+        minTemperature = min_temp;
+        minheizungstemperatur.set(String.valueOf(minTemperature) + " °C");
     }
 
     @Override
