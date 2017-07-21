@@ -19,7 +19,6 @@ import java.util.Optional;
 public class Controller {
 
 
-
     @FXML
     private Label lbl_Serverip;
     @FXML
@@ -65,29 +64,26 @@ public class Controller {
     public Heizung heiz1 = null;
 
 
-
     public void BTNServerStarten(ActionEvent event) throws IOException {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Name der Heizung definieren");
         dialog.setHeaderText("Heizung anlegen");
         dialog.setContentText("Bitte dieser Heizung einen Namen geben:");
 
-        if(!(lbl_Servername.getText().equals("-"))){
+        if (!(lbl_Servername.getText().equals("-"))) {
 
-        }
-        else{
+        } else {
             Optional<String> result = dialog.showAndWait();
-            if(result.isPresent() == true && !result.get().equals("")){
-            lbl_Servername.setText(result.get());}
-            else{
+            if (result.isPresent() == true && !result.get().equals("")) {
+                lbl_Servername.setText(result.get());
+            } else {
                 return;
             }
         }
 
-        if(heiz1 == null){
+        if (heiz1 == null) {
             heiz1 = new Heizung();
-        }
-        else{
+        } else {
             heiz1 = new Heizung();
         }
 
@@ -111,7 +107,7 @@ public class Controller {
 
         lbl_srvmsg.setText(heiz1.startServer(lbl_Servername.getText()));
         lbl_Serverip.setText(heiz1.getServerIP());
-        lbl_Servername.setText(heiz1.heizungname);
+        lbl_Servername.setText(heiz1.genericName);
         lbl_Serverstatus.setText(heiz1.serverstatus);
 
         lbl_temp.textProperty().bind(heiz1.heizungstemperatur);
@@ -127,40 +123,40 @@ public class Controller {
 
         lbl_Serverport.setText(srvport);
 
-        if(lbl_Serverstatus.getText() == "Gestartet"){
+        if (lbl_Serverstatus.getText() == "Gestartet") {
             btn_starteServer.setDisable(true);
             btn_stoppeServer.setDisable(false);
         }
     }
 
-    public void BTNServerStoppen(ActionEvent event){
+    public void BTNServerStoppen(ActionEvent event) {
         lbl_srvmsg.setText(heiz1.stopServer());
         lbl_Serverstatus.setText(heiz1.serverstatus);
 
-        if (lbl_Serverstatus.getText() == "Gestoppt"){
+        if (lbl_Serverstatus.getText() == "Gestoppt") {
             btn_stoppeServer.setDisable(true);
             btn_starteServer.setDisable(false);
         }
     }
 
-    public void BTNSetTemp(ActionEvent event){
+    public void BTNSetTemp(ActionEvent event) {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Temperatur einstellen");
         dialog.setHeaderText("Temperatur der Heizung einstellen");
         dialog.setContentText("Bitte Temperatur der Heizung einstellen:");
         Optional<String> result = dialog.showAndWait();
 
-        if(result.isPresent() == true && !result.get().equals("")) {
+        if (result.isPresent() == true && !result.get().equals("")) {
             Double newTemp = Double.parseDouble(result.get());
             System.out.println(newTemp);
             heiz1.setTemperatureSrv(newTemp);
-        }
-        else{
+        } else {
             return;
         }
     }
+}
 
-    public void BTNSetMaxTemp(ActionEvent event){
+    /*public void BTNSetMaxTemp(ActionEvent event){
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Maximale Temperatur einstellen");
         dialog.setHeaderText("Maximale Temperatur der Heizung einstellen");
@@ -175,9 +171,9 @@ public class Controller {
         else{
             return;
         }
-    }
+    }*/
 
-    public void BTNSetMinTemp(ActionEvent event){
+    /*public void BTNSetMinTemp(ActionEvent event){
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Minimalste Temperatur einstellen");
         dialog.setHeaderText("Minimalste Temperatur der Heizung einstellen");
@@ -194,7 +190,7 @@ public class Controller {
         }
     }
 
-    public void BTNSetMaxWL(ActionEvent event){
+    /*public void BTNSetMaxWL(ActionEvent event){
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Maximales Wasserlevel einstellen");
         dialog.setHeaderText("Maximalstes Wasserlevel der Heizung einstellen");
@@ -209,9 +205,9 @@ public class Controller {
         else{
             return;
         }
-    }
+    }*/
 
-    public void BTNSetMinWL(ActionEvent event){
+    /*public void BTNSetMinWL(ActionEvent event){
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Minimales Wasserlevel einstellen");
         dialog.setHeaderText("Minimalstes Wasserlevel der Heizung einstellen");
@@ -227,4 +223,4 @@ public class Controller {
             return;
         }
     }
-}
+}*/

@@ -2,6 +2,7 @@ package HeizungServer.interfaces;
 
 
 
+import de.thm.smarthome.global.beans.*;
 import de.thm.smarthome.global.enumeration.ResponseCode;
 
 import java.rmi.Remote;
@@ -11,7 +12,20 @@ import java.rmi.RemoteException;
  * Created by Tim on 07.04.2017.
  */
 public interface HeizungServerInterface extends Remote {
-    public void setTemperature(double temperature, HeizungClientInterface c) throws RemoteException;
+
+    void setGenericName(String genericName);
+    MeasureBean setDesiredTemperature(double desiredTemperature);
+    PowerStateBean setPowerState(boolean powerState);
+    MeasureBean getCurrentTemperature();
+    MeasureBean getDesiredTemperature();
+    ManufacturerBean getManufacturer();
+    ActionModeBean getActionMode();
+    PowerStateBean getPowerState();
+    ModelVariantBean getModelVariant();
+    String getGenericName();
+    String getSerialNumber();
+
+    /*public void setTemperature(double temperature, HeizungClientInterface c) throws RemoteException;
     public double getTemperature(HeizungClientInterface c) throws RemoteException;
     public String getName(HeizungClientInterface c) throws RemoteException;
     public double getMaxTemperature (HeizungClientInterface c) throws RemoteException;
@@ -27,5 +41,5 @@ public interface HeizungServerInterface extends Remote {
     public ResponseCode switchOn(HeizungClientInterface c) throws RemoteException;
     public ResponseCode switchOff(HeizungClientInterface c) throws RemoteException;
     public String getStatus(HeizungClientInterface c) throws RemoteException;
-    //public void update(AObservable o, Object change, HeizungClientInterface c) throws RemoteException;
+    //public void update(AObservable o, Object change, HeizungClientInterface c) throws RemoteException;*/
 }

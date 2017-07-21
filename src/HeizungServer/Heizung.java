@@ -7,7 +7,8 @@ import HeizungServer.interfaces.HeizungClientInterface;
 import HeizungServer.interfaces.HeizungServerInterface;
 import HeizungServer.observer.AObservable;
 import HeizungServer.observer.IObserver;
-import de.thm.smarthome.global.enumeration.ResponseCode;
+import de.thm.smarthome.global.beans.*;
+import de.thm.smarthome.global.enumeration.*;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -27,7 +28,20 @@ import java.rmi.server.UnicastRemoteObject;
  */
 public class Heizung extends AObservable implements IObserver, HeizungServerInterface {
 
-    public String heizungname = null;
+    /*Attribute/Beans*/
+
+    private MeasureBean currentTemperature = new MeasureBean(0.00, EUnitOfMeasurement.TEMPERATURE_DEGREESCELSIUS);
+    private MeasureBean desiredTemperature = new MeasureBean(0.00, EUnitOfMeasurement.TEMPERATURE_DEGREESCELSIUS);;
+    private ModelVariantBean modelVariant = new ModelVariantBean(EModelVariant.NA);
+    private ManufacturerBean manufacturer = new ManufacturerBean(EDeviceManufacturer.NA);
+    private PowerStateBean powerState = new PowerStateBean(EPowerState.OFF);
+    private ActionModeBean actionModeBean = new ActionModeBean(EActionMode.NA);
+
+
+    /*Variable*/
+    public String genericName = null;
+    private String serialNumber = null;
+
     public String serverstatus = null;
     public int serverport = 1099;
     public ByteArrayOutputStream srvlog = null;
@@ -35,8 +49,6 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
     public Double temperature = 0.00;
     public Double maxTemperature = 0.00;
     public Double minTemperature = 0.00;
-    public Double maxWaterlevel = 0.00;
-    public Double minWaterlevel = 0.00;
     public String status = "-";
 
     public StringProperty heizungstemperatur = new SimpleStringProperty("0.00 °C");
@@ -70,9 +82,15 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
     }
 
     @Override
-    public double getTemperature(HeizungClientInterface c) throws RemoteException {
+    public MeasureBean getCurrentTemperature() {
 
-        return this.temperature;
+        return currentTemperature;
+    }
+
+    @Override
+    public MeasureBean getDesiredTemperature() {
+
+        return desiredTemperature;
     }
 
     public double getTemperatureSrv() throws RemoteException {
@@ -81,12 +99,61 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
     }
 
     @Override
-    public String getName(HeizungClientInterface c) throws RemoteException {
+    public ModelVariantBean getModelVariant() {
 
-        return this.heizungname;
+        return modelVariant;
     }
 
     @Override
+    public ManufacturerBean getManufacturer() {
+
+        return manufacturer;
+    }
+
+    @Override
+    public ActionModeBean getActionMode() {
+
+        return actionModeBean;
+    }
+
+    @Override
+    public String getGenericName()  {
+
+        return this.genericName;
+    }
+
+    @Override
+    public String getSerialNumber()  {
+
+        return this.serialNumber;
+    }
+
+    @Override
+    public PowerStateBean getPowerState() {
+
+        return powerState;
+    }
+
+    @Override
+    public MeasureBean setDesiredTemperature(double new_desiredTemperature) {
+
+        desiredTemperature = new MeasureBean(new_desiredTemperature, EUnitOfMeasurement.TEMPERATURE_DEGREESCELSIUS);
+        return this.desiredTemperature;
+    }
+
+    @Override
+    public void setGenericName(String genericName){
+        this.genericName = genericName;
+    }
+
+    @Override
+    public PowerStateBean setPowerState(boolean new_powerState) {
+
+        powerState = new PowerStateBean(new_powerState);
+        return this.powerState;
+    }
+
+    /* @Override
     public double getMaxTemperature(HeizungClientInterface c) throws RemoteException {
         return this.maxTemperature;
     }
@@ -214,7 +281,7 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
     public String getStatus(HeizungClientInterface c) throws RemoteException {
         return this.status;
     }
-
+*/
     public String getStatusSrv(){
         return this.status;
     }
@@ -234,7 +301,7 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
             //System.out.println(srvlog.toString());
             /*Bindet den Server an die folgende Adresse*/
             Naming.rebind("//127.0.0.1/"+heizungname, this);
-            this.heizungname = heizungname;
+            this.genericName = heizungname;
             this.serverstatus = "Gestartet";
             status = "On";
             return "Server ist gestartet!";
@@ -284,7 +351,7 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
             //Registry rmiRegistry = LocateRegistry.getRegistry("127.0.0.1", serverport);
             //HeizungServerInterface myService = (HeizungServerInterface) rmiRegistry.lookup(heizungname);
 
-            rmiRegistry.unbind(heizungname);
+            rmiRegistry.unbind(genericName);
 
             //UnicastRemoteObject.unexportObject(myService, true);
             UnicastRemoteObject.unexportObject(rmiRegistry, true);
@@ -309,7 +376,7 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
 
 
 
-    public double getMaxTemperatureSrv(){
+    /*public double getMaxTemperatureSrv(){
         return this.maxTemperature;
     }
 
@@ -324,7 +391,7 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
 
     public double getMinWaterlevelSrv() throws RemoteException {
         return minWaterlevel;
-    }
+    }*/
 
     }
 
