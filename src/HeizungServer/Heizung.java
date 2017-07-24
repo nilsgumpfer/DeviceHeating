@@ -14,6 +14,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import java.io.ByteArrayOutputStream;
+import java.io.InterruptedIOException;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.UnknownHostException;
@@ -82,13 +83,13 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
     }
 
     @Override
-    public MeasureBean getCurrentTemperature() {
+    public MeasureBean getCurrentTemperature() throws RemoteException{
 
         return currentTemperature;
     }
 
     @Override
-    public MeasureBean getDesiredTemperature() {
+    public MeasureBean getDesiredTemperature() throws RemoteException{
 
         return desiredTemperature;
     }
@@ -99,58 +100,103 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
     }
 
     @Override
-    public ModelVariantBean getModelVariant() {
+    public ModelVariantBean getModelVariant() throws RemoteException{
 
         return modelVariant;
     }
 
     @Override
-    public ManufacturerBean getManufacturer() {
+    public ManufacturerBean getManufacturer() throws RemoteException{
 
         return manufacturer;
     }
 
     @Override
-    public ActionModeBean getActionMode() {
+    public ActionModeBean getActionMode() throws RemoteException{
 
         return actionModeBean;
     }
 
     @Override
-    public String getGenericName()  {
+    public String getGenericName()  throws RemoteException{
 
         return this.genericName;
     }
 
     @Override
-    public String getSerialNumber()  {
+    public String getSerialNumber()  throws RemoteException{
 
         return this.serialNumber;
     }
 
     @Override
-    public PowerStateBean getPowerState() {
+    public PowerStateBean getPowerState() throws RemoteException{
 
         return powerState;
     }
 
     @Override
-    public MeasureBean setDesiredTemperature(double new_desiredTemperature) {
+    public void setDesiredTemperature(MeasureBean new_desiredTemperature) throws RemoteException{
 
-        desiredTemperature = new MeasureBean(new_desiredTemperature, EUnitOfMeasurement.TEMPERATURE_DEGREESCELSIUS);
-        return this.desiredTemperature;
-    }
+        desiredTemperature = new_desiredTemperature;
+        if(desiredTemperature.getMeasure_Double() < currentTemperature.getMeasure_Double()){
+            abkuehlen();
+        }
+        else if (desiredTemperature.getMeasure_Double() > currentTemperature.getMeasure_Double()){
+        aufheizen();
+
+    }}
+
+    private void setCurrentTemperature(MeasureBean new_currentTemperature) {
+        currentTemperature = new_currentTemperature;}
+
+    private void aufheizen(){
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                for (double d = currentTemperature.getMeasure_Double(); currentTemperature.getMeasure_Double() == desiredTemperature.getMeasure_Double(); d++) {
+
+                    MeasureBean new_currentTemperature = new MeasureBean(d, currentTemperature.getUnitOfMeasurement_Enum());
+                    setCurrentTemperature(new_currentTemperature);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                    }
+
+
+                }
+            }
+        });}
+
+    private void abkuehlen(){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                for(double d = currentTemperature.getMeasure_Double(); currentTemperature.getMeasure_Double() == desiredTemperature.getMeasure_Double(); d--){
+
+                    MeasureBean new_currentTemperature = new MeasureBean(d, currentTemperature.getUnitOfMeasurement_Enum());
+                    setCurrentTemperature(new_currentTemperature);
+                    try {
+                        Thread.sleep(1000);
+                    }
+                    catch(InterruptedException e){
+                    }
+                }
+            }
+        });}
+
 
     @Override
-    public void setGenericName(String genericName){
+    public void setGenericName(String genericName)throws RemoteException{
         this.genericName = genericName;
     }
 
     @Override
-    public PowerStateBean setPowerState(boolean new_powerState) {
+    public void setPowerState(PowerStateBean new_powerState) throws RemoteException{
 
-        powerState = new PowerStateBean(new_powerState);
-        return this.powerState;
+        powerState = new_powerState;
+
     }
 
     /* @Override

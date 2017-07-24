@@ -13,17 +13,17 @@ import java.rmi.RemoteException;
  */
 public interface HeizungServerInterface extends Remote {
 
-    void setGenericName(String genericName);
-    MeasureBean setDesiredTemperature(double desiredTemperature);
-    PowerStateBean setPowerState(boolean powerState);
-    MeasureBean getCurrentTemperature();
-    MeasureBean getDesiredTemperature();
-    ManufacturerBean getManufacturer();
-    ActionModeBean getActionMode();
-    PowerStateBean getPowerState();
-    ModelVariantBean getModelVariant();
-    String getGenericName();
-    String getSerialNumber();
+    void setGenericName(String new_genericName) throws RemoteException;
+    void setDesiredTemperature(MeasureBean new_desiredTemperature) throws RemoteException;
+    void setPowerState(PowerStateBean new_powerState) throws RemoteException;
+    MeasureBean getCurrentTemperature() throws RemoteException;
+    MeasureBean getDesiredTemperature() throws RemoteException;
+    ManufacturerBean getManufacturer() throws RemoteException;
+    ActionModeBean getActionMode() throws RemoteException;
+    PowerStateBean getPowerState() throws RemoteException;
+    ModelVariantBean getModelVariant() throws RemoteException;
+    String getGenericName() throws RemoteException;
+    String getSerialNumber() throws RemoteException;
 
     /*public void setTemperature(double temperature, HeizungClientInterface c) throws RemoteException;
     public double getTemperature(HeizungClientInterface c) throws RemoteException;
