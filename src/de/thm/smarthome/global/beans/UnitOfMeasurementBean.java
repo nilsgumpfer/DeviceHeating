@@ -2,10 +2,12 @@ package de.thm.smarthome.global.beans;
 
 import de.thm.smarthome.global.enumeration.EUnitOfMeasurement;
 
+import java.io.Serializable;
+
 /**
  * Created by Nils on 11.06.2017.
  */
-public class UnitOfMeasurementBean {
+public class UnitOfMeasurementBean implements Serializable{
     private EUnitOfMeasurement unitOfMeasurement_Enum;
     private String unitOfMeasurement_String = "NULL";
 

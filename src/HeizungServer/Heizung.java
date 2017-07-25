@@ -32,11 +32,11 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
     /*Attribute/Beans*/
 
     private MeasureBean currentTemperature = new MeasureBean(0.00, EUnitOfMeasurement.TEMPERATURE_DEGREESCELSIUS);
-    private MeasureBean desiredTemperature = new MeasureBean(0.00, EUnitOfMeasurement.TEMPERATURE_DEGREESCELSIUS);;
-    private ModelVariantBean modelVariant = new ModelVariantBean(EModelVariant.NA);
-    private ManufacturerBean manufacturer = new ManufacturerBean(EDeviceManufacturer.NA);
-    private PowerStateBean powerState = new PowerStateBean(EPowerState.OFF);
-    private ActionModeBean actionModeBean = new ActionModeBean(EActionMode.NA);
+    private MeasureBean desiredTemperature = new MeasureBean(0.00, EUnitOfMeasurement.TEMPERATURE_DEGREESCELSIUS);
+    private ModelVariantBean modelVariant;
+    private ManufacturerBean manufacturer;
+    private PowerStateBean powerState;
+    private ActionModeBean actionModeBean;
 
 
     /*Variable*/
@@ -48,15 +48,10 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
     public ByteArrayOutputStream srvlog = null;
     public Registry rmiRegistry;
     public Double temperature = 0.00;
-    public Double maxTemperature = 0.00;
-    public Double minTemperature = 0.00;
     public String status = "-";
 
-    public StringProperty heizungstemperatur = new SimpleStringProperty("0.00 °C");
-    public StringProperty maxheizungstemperatur = new SimpleStringProperty("0.00 °C");
-    public StringProperty minheizungstemperatur = new SimpleStringProperty("0.00 °C");
-    public StringProperty maxwaterlevel = new SimpleStringProperty("0 l");
-    public StringProperty minwaterlevel = new SimpleStringProperty("0 l");
+    public StringProperty heizungstemperatur = new SimpleStringProperty(String.valueOf(currentTemperature.getMeasure_Double())+" "+currentTemperature.getUnitOfMeasurement_String());
+    public StringProperty desiredHeatngTemperature = new SimpleStringProperty(String.valueOf(desiredTemperature.getMeasure_Double())+" "+desiredTemperature.getUnitOfMeasurement_String());
 
     public Heizung() {
 
@@ -139,6 +134,13 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
     public void setDesiredTemperature(MeasureBean new_desiredTemperature) throws RemoteException{
 
         desiredTemperature = new_desiredTemperature;
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                desiredHeatngTemperature.set(String.valueOf(desiredTemperature.getMeasure_Double()) + " " + desiredTemperature.getUnitOfMeasurement_String());
+            }
+        });
+
         if(desiredTemperature.getMeasure_Double() < currentTemperature.getMeasure_Double()){
             abkuehlen();
         }
@@ -148,43 +150,60 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
     }}
 
     private void setCurrentTemperature(MeasureBean new_currentTemperature) {
-        currentTemperature = new_currentTemperature;}
+        currentTemperature = new_currentTemperature;
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                heizungstemperatur.set(String.valueOf(currentTemperature.getMeasure_Double()) + " " + currentTemperature.getUnitOfMeasurement_String());
+            }
+        });
+
+    }
+
 
     private void aufheizen(){
 
-        Platform.runLater(new Runnable() {
+        Thread aufheizen = new Thread(new Runnable() {
             @Override
             public void run() {
-                for (double d = currentTemperature.getMeasure_Double(); currentTemperature.getMeasure_Double() == desiredTemperature.getMeasure_Double(); d++) {
+                for (double d = currentTemperature.getMeasure_Double(); currentTemperature.getMeasure_Double() < desiredTemperature.getMeasure_Double(); d++) {
 
                     MeasureBean new_currentTemperature = new MeasureBean(d, currentTemperature.getUnitOfMeasurement_Enum());
                     setCurrentTemperature(new_currentTemperature);
+
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(500);
                     } catch (InterruptedException e) {
                     }
-
-
-                }
             }
-        });}
+        }
+
+       });
+    aufheizen.start();
+    }
 
     private void abkuehlen(){
-        Platform.runLater(new Runnable() {
+
+        Thread abkuehlen = new Thread(new Runnable() {
             @Override
             public void run() {
-                for(double d = currentTemperature.getMeasure_Double(); currentTemperature.getMeasure_Double() == desiredTemperature.getMeasure_Double(); d--){
+                for(double d = currentTemperature.getMeasure_Double(); currentTemperature.getMeasure_Double() > desiredTemperature.getMeasure_Double(); d--){
 
                     MeasureBean new_currentTemperature = new MeasureBean(d, currentTemperature.getUnitOfMeasurement_Enum());
                     setCurrentTemperature(new_currentTemperature);
+
                     try {
-                        Thread.sleep(1000);
-                    }
-                    catch(InterruptedException e){
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
                     }
                 }
             }
-        });}
+
+        });
+        abkuehlen.start();
+
+
+        }
 
 
     @Override

@@ -40,24 +40,7 @@ public class Controller {
     @FXML
     private Label lbl_temp;
     @FXML
-    private Label lbl_maxtemp;
-    @FXML
-    private Label lbl_mintemp;
-    @FXML
-    private Label lbl_maxwl;
-    @FXML
-    private Label lbl_minwl;
-
-    @FXML
-    private Button btn_setTemp;
-    @FXML
-    private Button btn_setMaxTemp;
-    @FXML
-    private Button btn_setMinTemp;
-    @FXML
-    private Button btn_setMaxWL;
-    @FXML
-    private Button btn_setMinWL;
+    private Label lbl_desiredtemp;
 
     public static PrintStream ps;
 
@@ -111,10 +94,8 @@ public class Controller {
         lbl_Serverstatus.setText(heiz1.serverstatus);
 
         lbl_temp.textProperty().bind(heiz1.heizungstemperatur);
-        lbl_maxtemp.textProperty().bind(heiz1.maxheizungstemperatur);
-        lbl_mintemp.textProperty().bind(heiz1.minheizungstemperatur);
-        lbl_maxwl.textProperty().bind(heiz1.maxwaterlevel);
-        lbl_minwl.textProperty().bind(heiz1.minwaterlevel);
+        lbl_desiredtemp.textProperty().bind(heiz1.desiredHeatngTemperature);
+
 
         StringBuilder sb = new StringBuilder();
         sb.append("");

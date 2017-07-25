@@ -2,10 +2,12 @@ package de.thm.smarthome.global.beans;
 
 import de.thm.smarthome.global.enumeration.EDeviceManufacturer;
 
+import java.io.Serializable;
+
 /**
  * Created by Nils on 11.06.2017.
  */
-public class ManufacturerBean {
+public class ManufacturerBean implements Serializable{
     private EDeviceManufacturer deviceManufacturer_Enum;
     private String deviceManufacturer_String = "NULL";
 

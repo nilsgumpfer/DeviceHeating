@@ -2,10 +2,12 @@ package de.thm.smarthome.global.beans;
 
 import de.thm.smarthome.global.enumeration.EPowerState;
 
+import java.io.Serializable;
+
 /**
  * Created by Nils on 11.06.2017.
  */
-public class PowerStateBean {
+public class PowerStateBean implements Serializable{
     private EPowerState powerState_Enum;
     private String powerState_String = "NULL";
 

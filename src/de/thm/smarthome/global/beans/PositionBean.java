@@ -2,10 +2,12 @@ package de.thm.smarthome.global.beans;
 
 import de.thm.smarthome.global.enumeration.EPosition;
 
+import java.io.Serializable;
+
 /**
  * Created by Nils on 11.06.2017.
  */
-public class PositionBean {
+public class PositionBean implements Serializable{
     private EPosition position_Enum;
     private String position_String = "NULL";
 

@@ -2,10 +2,12 @@ package de.thm.smarthome.global.beans;
 
 import de.thm.smarthome.global.enumeration.EActionMode;
 
+import java.io.Serializable;
+
 /**
  * Created by Nils on 11.06.2017.
  */
-public class ActionModeBean {
+public class ActionModeBean implements Serializable{
     private EActionMode actionMode_Enum;
     private String actionMode_String = "NULL";
 

@@ -2,10 +2,12 @@ package de.thm.smarthome.global.beans;
 
 import de.thm.smarthome.global.enumeration.EMessageCode;
 
+import java.io.Serializable;
+
 /**
  * Created by Nils on 11.06.2017.
  */
-public class MessageBean {
+public class MessageBean implements Serializable{
     private EMessageCode messageCode_Enum;
     private String message_String = "NULL";
 

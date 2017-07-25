@@ -3,10 +3,12 @@ package de.thm.smarthome.global.beans;
 import de.thm.smarthome.global.enumeration.EDeviceManufacturer;
 import de.thm.smarthome.global.enumeration.EModelVariant;
 
+import java.io.Serializable;
+
 /**
  * Created by Nils on 11.06.2017.
  */
-public class ModelVariantBean {
+public class ModelVariantBean implements Serializable{
     private EModelVariant modelVariant_Enum;
     private String modelVariant_String = "NULL";
 
