@@ -48,7 +48,7 @@ public class Controller {
 
 
     public void BTNServerStarten(ActionEvent event) throws IOException {
-        TextInputDialog dialog = new TextInputDialog();
+        /*TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Name der Heizung definieren");
         dialog.setHeaderText("Heizung anlegen");
         dialog.setContentText("Bitte dieser Heizung einen Namen geben:");
@@ -62,7 +62,7 @@ public class Controller {
             } else {
                 return;
             }
-        }
+        }*/
 
         if (heiz1 == null) {
             heiz1 = new Heizung();
@@ -88,7 +88,7 @@ public class Controller {
 
         /*Server wird gestartet*/
 
-        lbl_srvmsg.setText(heiz1.startServer(lbl_Servername.getText()));
+        lbl_srvmsg.setText(heiz1.startServer());
         lbl_Serverip.setText(heiz1.getServerIP());
         lbl_Servername.setText(heiz1.genericName);
         lbl_Serverstatus.setText(heiz1.serverstatus);

@@ -1,6 +1,5 @@
 package de.thm.smarthome.global.beans;
 
-import de.thm.smarthome.global.enumeration.EDeviceManufacturer;
 import de.thm.smarthome.global.enumeration.EModelVariant;
 
 import java.io.Serializable;
@@ -17,8 +16,9 @@ public class ModelVariantBean implements Serializable{
         lookUpString();
     }
 
-    public ModelVariantBean(EDeviceManufacturer buderus, String modelVariant) {
-        //TODO: Based on manufacturer and modelVariant, assign ModelVariant
+    public ModelVariantBean(String  modelVariant) {
+        this.modelVariant_String = modelVariant;
+        lookUpEnum();
     }
 
     public EModelVariant getModelVariant_Enum() {
@@ -33,6 +33,32 @@ public class ModelVariantBean implements Serializable{
         switch (modelVariant_Enum){
             case NA:
                 modelVariant_String = "N/A";
+                break;
+            case HEATING_3000:
+                modelVariant_String = "Heizung3000X2";
+                break;
+            case HEATING_2000:
+                modelVariant_String = "Heizung2000X2";
+                break;
+            case HEATING_1000:
+                modelVariant_String = "Heizung1000X2";
+                break;
+        }
+    }
+
+    private void lookUpEnum(){
+        switch (modelVariant_String){
+            case "NA":
+                modelVariant_String = "N/A";
+                break;
+            case "HEATING_3000":
+                modelVariant_String = "Heizung3000X2";
+                break;
+            case "HEATING_2000":
+                modelVariant_String = "Heizung2000X2";
+                break;
+            case "HEATING_1000":
+                modelVariant_String = "Heizung1000X2";
                 break;
         }
     }

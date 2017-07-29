@@ -16,6 +16,12 @@ public class ManufacturerBean implements Serializable{
         lookUpString();
     }
 
+    public ManufacturerBean(String deviceManufacturer)
+    {
+        this.deviceManufacturer_String = deviceManufacturer;
+        lookUpEnum();
+    }
+
     public EDeviceManufacturer getDeviceManufacturer_Enum() {
         return deviceManufacturer_Enum;
     }
@@ -44,6 +50,31 @@ public class ManufacturerBean implements Serializable{
             case ELECTRIC_COMPANY:
                 deviceManufacturer_String = "Electric Company";
                 break;
+        }
+    }
+
+    private void lookUpEnum(){
+        switch (deviceManufacturer_String){
+            case "NA":
+                deviceManufacturer_Enum = EDeviceManufacturer.NA;
+                break;
+            case "VIESSMANN":
+                deviceManufacturer_Enum = EDeviceManufacturer.VIESSMANN;
+                break;
+            case "BUDERUS":
+                deviceManufacturer_Enum = EDeviceManufacturer.BUDERUS;
+                break;
+            case "VAILLANT":
+                deviceManufacturer_Enum = EDeviceManufacturer.VAILLANT;
+                break;
+            case "CONRAD_ELECTRONIC":
+                deviceManufacturer_Enum = EDeviceManufacturer.CONRAD_ELECTRONIC;
+                break;
+            case "ELECTRIC_COMPANY":
+                deviceManufacturer_Enum = EDeviceManufacturer.ELECTRIC_COMPANY;
+                break;
+            default:
+                deviceManufacturer_Enum = EDeviceManufacturer.NA;
         }
     }
 }

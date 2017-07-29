@@ -11,7 +11,7 @@ public enum EPosition {
     P3,
     P4,
     P5,
-    UP,
+    P5_UP,
     MIDDLE,
-    DOWN
+    P0_DOWN
 }

@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 public class ActionModeBean implements Serializable{
     private EActionMode actionMode_Enum;
-    private String actionMode_String = "NULL";
+    private String actionMode_String = "";
 
     public ActionModeBean(EActionMode actionMode_Enum) {
         this.actionMode_Enum = actionMode_Enum;
@@ -26,6 +26,15 @@ public class ActionModeBean implements Serializable{
 
     private void lookUpString(){
         switch (actionMode_Enum){
+            case DAYMODE:
+                actionMode_String = "Daymode";
+                break;
+            case NIGHTMODE:
+                actionMode_String = "Nightmode";
+                break;
+            case MAINTENANCEMODE:
+                actionMode_String = "Maintenancemode";
+                break;
             case NA:
                 actionMode_String = "N/A";
                 break;

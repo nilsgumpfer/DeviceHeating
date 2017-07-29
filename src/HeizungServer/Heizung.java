@@ -40,7 +40,7 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
 
 
     /*Variable*/
-    public String genericName = null;
+    public String genericName = "SmartHomeAPI";
     private String serialNumber = null;
 
     public String serverstatus = null;
@@ -352,7 +352,7 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
     }
 
 
-    public String startServer(String heizungname) throws RemoteException {
+    public String startServer() throws RemoteException {
         HeizungServerInterface stub = (HeizungServerInterface) UnicastRemoteObject.exportObject(this, 0);
         rmiRegistry = LocateRegistry.createRegistry(serverport);
         try {
@@ -365,8 +365,7 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
             RemoteServer.setLog(System.out);
             //System.out.println(srvlog.toString());
             /*Bindet den Server an die folgende Adresse*/
-            Naming.rebind("//127.0.0.1/"+heizungname, this);
-            this.genericName = heizungname;
+            Naming.rebind("//127.0.0.1/"+genericName, this);
             this.serverstatus = "Gestartet";
             status = "On";
             return "Server ist gestartet!";

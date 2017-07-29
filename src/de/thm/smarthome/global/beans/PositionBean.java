@@ -22,7 +22,7 @@ public class PositionBean implements Serializable{
                 position_Enum = EPosition.NA;
                 break;
             case 0:
-                position_Enum = EPosition.DOWN;
+                position_Enum = EPosition.P0_DOWN;
                 break;
             case 1:
                 position_Enum = EPosition.P1;
@@ -37,8 +37,10 @@ public class PositionBean implements Serializable{
                 position_Enum = EPosition.P4;
                 break;
             case 5:
-                position_Enum = EPosition.UP;
+                position_Enum = EPosition.P5_UP;
                 break;
+            default:
+                throw new IllegalArgumentException("Folgende Positionen werden unterstützt: [0,1,2,3,4,5]");
         }
 
         lookUpString();
@@ -57,8 +59,7 @@ public class PositionBean implements Serializable{
             case NA:
                 position_String = "N/A";
                 break;
-            case DOWN:
-            case P0:
+            case P0_DOWN:
                 position_String = "Position 0 / Untere Position (0% geöffnet)";
                 break;
             case P1:
@@ -74,8 +75,7 @@ public class PositionBean implements Serializable{
             case P4:
                 position_String = "Position 4 (80% geöffnet)";
                 break;
-            case UP:
-            case P5:
+            case P5_UP:
                 position_String = "Position 5 / Obere Position (100% geöffnet)";
                 break;
         }
@@ -85,8 +85,7 @@ public class PositionBean implements Serializable{
         switch (position_Enum) {
             case NA:
                 return -1;
-            case DOWN:
-            case P0:
+            case P0_DOWN:
                 return 0;
             case P1:
                 return 1;
@@ -97,8 +96,7 @@ public class PositionBean implements Serializable{
                 return 3;
             case P4:
                 return 4;
-            case UP:
-            case P5:
+            case P5_UP:
                 return 5;
             default:
                 return -1;
