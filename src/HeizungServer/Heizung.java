@@ -15,6 +15,7 @@ import javafx.beans.property.StringProperty;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InterruptedIOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.UnknownHostException;
@@ -365,14 +366,18 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
             RemoteServer.setLog(System.out);
             //System.out.println(srvlog.toString());
             /*Bindet den Server an die folgende Adresse*/
-            Naming.rebind("//Test/"+genericName, this);
+            Naming.rebind("//127.0.0.1/"+genericName, this);
             this.serverstatus = "Gestartet";
             status = "On";
             return "Server ist gestartet!";
 
 
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            System.out.print(e.toString());
+            return "Fehler beim Starten des Servers!";
+        }
+        catch (RemoteException rex) {
+            System.out.print(rex.toString());
             return "Fehler beim Starten des Servers!";
         }
 
@@ -425,14 +430,14 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
 
         } catch (NoSuchObjectException e)
         {
-            e.printStackTrace();
+            System.out.print(e.toString());
             return "Fehler beim Stoppen des Servers!";
-        } catch (NotBoundException e)
+        } catch (NotBoundException nbe)
         {
-            e.printStackTrace();
+            System.out.print(nbe.toString());
             return "Fehler beim Stoppen des Servers!";
-        } catch (RemoteException e) {
-            e.printStackTrace();
+        } catch (RemoteException rex) {
+            System.out.print(rex.toString());
             return "Fehler beim Stoppen des Servers!";
         }
 
