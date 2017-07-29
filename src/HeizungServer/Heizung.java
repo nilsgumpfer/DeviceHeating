@@ -365,7 +365,7 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
             RemoteServer.setLog(System.out);
             //System.out.println(srvlog.toString());
             /*Bindet den Server an die folgende Adresse*/
-            Naming.rebind("//127.0.0.1/"+genericName, this);
+            Naming.rebind("//Test/"+genericName, this);
             this.serverstatus = "Gestartet";
             status = "On";
             return "Server ist gestartet!";
