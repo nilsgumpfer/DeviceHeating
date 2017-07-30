@@ -22,6 +22,7 @@ import java.net.UnknownHostException;
 import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.ExportException;
 import java.rmi.server.RemoteServer;
 import java.rmi.server.UnicastRemoteObject;
 
@@ -41,8 +42,10 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
 
 
     /*Variable*/
-    public String genericName = "SmartHomeAPI";
+    private String genericName = null;
     private String serialNumber = null;
+    public String servername = "SmartHomeAPI";
+    private String serverIP;
 
     public String serverstatus = null;
     public int serverport = 1099;
@@ -56,6 +59,21 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
 
     public Heizung() {
 
+    }
+
+    private String getServerIPbyHostName(){
+        InetAddress ip;
+        try {
+
+            ip = InetAddress.getByName(genericName);
+            System.out.println(ip.getHostAddress());
+            return ip.getHostAddress();
+
+        } catch (UnknownHostException e) {
+
+            e.printStackTrace();
+            return "0.0.0.0";
+        }
     }
 
     public void setTemperature(double temperature, HeizungClientInterface c) {
@@ -175,6 +193,7 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
             }
         }
@@ -354,8 +373,11 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
 
 
     public String startServer() throws RemoteException {
+        serverIP = getServerIPbyHostName();
+        System.setProperty("java.rmi.server.hostname", serverIP);
         HeizungServerInterface stub = (HeizungServerInterface) UnicastRemoteObject.exportObject(this, 0);
         rmiRegistry = LocateRegistry.createRegistry(serverport);
+
         try {
             /*if (System.getSecurityManager() == null) {
                 System.setProperty("java.security.policy", "file:C:\\Users\\Tim\\IdeaProjects\\HeizungServer\\out\\production\\HeizungServer\\HeizungServer\\server.policy");
@@ -366,21 +388,20 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
             RemoteServer.setLog(System.out);
             //System.out.println(srvlog.toString());
             /*Bindet den Server an die folgende Adresse*/
-            Naming.rebind("//127.0.0.1/"+genericName, this);
+            Naming.rebind("//"+serverIP+"/"+servername, this);
             this.serverstatus = "Gestartet";
             status = "On";
             return "Server ist gestartet!";
 
 
         } catch (MalformedURLException e) {
-            System.out.print(e.toString());
+            e.printStackTrace();
             return "Fehler beim Starten des Servers!";
         }
         catch (RemoteException rex) {
-            System.out.print(rex.toString());
+            rex.printStackTrace();
             return "Fehler beim Starten des Servers!";
         }
-
     }
 
 
@@ -410,7 +431,7 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
         } catch (UnknownHostException e) {
 
             e.printStackTrace();
-            return null;
+            return "0.0.0.0";
         }
     }
 
@@ -420,7 +441,7 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
             //Registry rmiRegistry = LocateRegistry.getRegistry("127.0.0.1", serverport);
             //HeizungServerInterface myService = (HeizungServerInterface) rmiRegistry.lookup(heizungname);
 
-            rmiRegistry.unbind(genericName);
+            rmiRegistry.unbind(servername);
 
             //UnicastRemoteObject.unexportObject(myService, true);
             UnicastRemoteObject.unexportObject(rmiRegistry, true);
@@ -430,14 +451,14 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
 
         } catch (NoSuchObjectException e)
         {
-            System.out.print(e.toString());
+            e.printStackTrace();
             return "Fehler beim Stoppen des Servers!";
         } catch (NotBoundException nbe)
         {
-            System.out.print(nbe.toString());
+            nbe.printStackTrace();
             return "Fehler beim Stoppen des Servers!";
         } catch (RemoteException rex) {
-            System.out.print(rex.toString());
+            rex.printStackTrace();
             return "Fehler beim Stoppen des Servers!";
         }
 

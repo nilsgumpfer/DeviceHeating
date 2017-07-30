@@ -90,7 +90,7 @@ public class Controller {
 
         lbl_srvmsg.setText(heiz1.startServer());
         lbl_Serverip.setText(heiz1.getServerIP());
-        lbl_Servername.setText(heiz1.genericName);
+        lbl_Servername.setText(heiz1.servername);
         lbl_Serverstatus.setText(heiz1.serverstatus);
 
         lbl_temp.textProperty().bind(heiz1.heizungstemperatur);
