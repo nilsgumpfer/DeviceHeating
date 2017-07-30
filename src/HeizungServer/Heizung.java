@@ -373,7 +373,7 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
 
 
     public String startServer() throws RemoteException {
-        serverIP = getServerIPbyHostName();
+        serverIP = getServerIP();
         System.setProperty("java.rmi.server.hostname", serverIP);
         HeizungServerInterface stub = (HeizungServerInterface) UnicastRemoteObject.exportObject(this, 0);
         rmiRegistry = LocateRegistry.createRegistry(serverport);
