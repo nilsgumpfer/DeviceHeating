@@ -1,5 +1,6 @@
-package HeizungServer.observer;
+package de.thm.smarthome.global.observer;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,9 +18,13 @@ public abstract class AObservable {
         attachedObservers.remove(observer);
     }
 
-    public void notifyObservers(Object change){
+    public void notifyObservers(Object change)  { //TODO: Ab hier nachverfolgen, ob Updates überhaupt beim SHManager ankommen
         for (IObserver element:attachedObservers) {
-            element.update(this,change);
+            try {
+                element.update(this,change);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HeizungServer.Controller">
+   <children>
+      <Label layoutX="14.0" layoutY="27.0" text="Heizung Server">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="419.0" layoutY="38.0" text="Servername:" />
+      <Label id="lbl_Servername" fx:id="lbl_Servername" layoutX="519.0" layoutY="38.0" text="-" />
+      <TabPane layoutX="5.0" layoutY="100.0" prefHeight="200.0" prefWidth="583.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Server">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="btn_starteServer" layoutX="130.0" layoutY="27.0" mnemonicParsing="false" onAction="#BTNServerStarten" prefHeight="25.0" prefWidth="324.0" text="Start Server" />
+                        <Button fx:id="btn_stoppeServer" disable="true" layoutX="130.0" layoutY="73.0" mnemonicParsing="false" onAction="#BTNServerStoppen" prefHeight="25.0" prefWidth="324.0" text="Stop Server" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Heizung">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="btn_setTemp" layoutX="14.0" layoutY="38.0" mnemonicParsing="false" onAction="#BTNSetTemp" text="Set aktuelle Temperatur" />
+                        <Label layoutX="14.0" layoutY="23.0" text="Aktuelle Temperatur:" />
+                        <Label fx:id="lbl_temp" layoutX="188.0" layoutY="23.0" text="-">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Label>
+                        <Button fx:id="btn_setTemp1" layoutX="14.0" layoutY="89.0" mnemonicParsing="false" onAction="#BTNSetTemp" text="Set gewünschte Temperatur" />
+                        <Label layoutX="14.0" layoutY="69.0" text="Gewünschte Temperatur:" />
+                        <Label fx:id="lbl_desiredtemp" layoutX="186.0" layoutY="69.0" text="-">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                     </children></AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Log">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextArea id="ta_srvlog" fx:id="ta_srvlog" editable="false" prefHeight="170.0" prefWidth="583.0" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+      <Pane layoutX="5.0" layoutY="358.0" prefHeight="28.0" prefWidth="200.0">
+         <children>
+            <Label id="lbl_srvmsg" fx:id="lbl_srvmsg" layoutX="1.0" layoutY="6.0" prefHeight="17.0" prefWidth="200.0" text="-" />
+         </children>
+      </Pane>
+      <Label layoutX="419.0" layoutY="55.0" text="Serverport:" />
+      <Label layoutX="419.0" layoutY="23.0" text="ServerIP:" />
+      <Label id="lbl_Serverport" fx:id="lbl_Serverport" layoutX="521.0" layoutY="55.0" text="-" />
+      <Label id="lbl_Serverip" fx:id="lbl_Serverip" layoutX="519.0" layoutY="23.0" text="-" />
+      <Label layoutX="419.0" layoutY="71.0" text="Serverstatus:" />
+      <Label id="lbl_Serverstatus" fx:id="lbl_Serverstatus" layoutX="521.0" layoutY="71.0" text="-" />
+   </children>
+</Pane>

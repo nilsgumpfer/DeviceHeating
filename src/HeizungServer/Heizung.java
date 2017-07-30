@@ -5,24 +5,24 @@ package HeizungServer;
  */
 import HeizungServer.interfaces.HeizungClientInterface;
 import HeizungServer.interfaces.HeizungServerInterface;
-import HeizungServer.observer.AObservable;
-import HeizungServer.observer.IObserver;
 import de.thm.smarthome.global.beans.*;
-import de.thm.smarthome.global.enumeration.*;
+import de.thm.smarthome.global.enumeration.EUnitOfMeasurement;
+import de.thm.smarthome.global.observer.AObservable;
+import de.thm.smarthome.global.observer.IObserver;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import java.io.ByteArrayOutputStream;
-import java.io.InterruptedIOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.UnknownHostException;
-import java.rmi.*;
+import java.rmi.Naming;
+import java.rmi.NoSuchObjectException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.rmi.server.ExportException;
 import java.rmi.server.RemoteServer;
 import java.rmi.server.UnicastRemoteObject;
 
@@ -161,7 +161,7 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
                 heizungstemperatur.set(String.valueOf(currentTemperature.getMeasure_Double()) + " " + currentTemperature.getUnitOfMeasurement_String());
             }
         });
-
+notifyObservers(this.currentTemperature);
     }
 
 

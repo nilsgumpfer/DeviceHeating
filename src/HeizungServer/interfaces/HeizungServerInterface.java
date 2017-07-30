@@ -3,7 +3,8 @@ package HeizungServer.interfaces;
 
 
 import de.thm.smarthome.global.beans.*;
-import de.thm.smarthome.global.enumeration.ResponseCode;
+import de.thm.smarthome.global.observer.IObserver;
+// import de.thm.smarthome.global.enumeration.ResponseCode;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -24,6 +25,7 @@ public interface HeizungServerInterface extends Remote {
     ModelVariantBean getModelVariant() throws RemoteException;
     String getGenericName() throws RemoteException;
     String getSerialNumber() throws RemoteException;
+    void attach(IObserver observer) throws RemoteException;
 
     /*public void setTemperature(double temperature, HeizungClientInterface c) throws RemoteException;
     public double getTemperature(HeizungClientInterface c) throws RemoteException;
