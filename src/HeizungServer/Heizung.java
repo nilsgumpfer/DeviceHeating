@@ -61,21 +61,6 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
 
     }
 
-    private String getServerIPbyHostName(){
-        InetAddress ip;
-        try {
-
-            ip = InetAddress.getByName(genericName);
-            System.out.println(ip.getHostAddress());
-            return ip.getHostAddress();
-
-        } catch (UnknownHostException e) {
-
-            e.printStackTrace();
-            return "0.0.0.0";
-        }
-    }
-
     public void setTemperature(double temperature, HeizungClientInterface c) {
         this.temperature = temperature;
         String neueTemp = String.valueOf(this.temperature);
@@ -193,7 +178,7 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        System.out.print(e.toString());
                     }
             }
         }
@@ -395,11 +380,11 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
 
 
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+           System.out.print(e.toString());
             return "Fehler beim Starten des Servers!";
         }
         catch (RemoteException rex) {
-            rex.printStackTrace();
+            System.out.print(rex.toString());
             return "Fehler beim Starten des Servers!";
         }
     }
@@ -430,7 +415,7 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
 
         } catch (UnknownHostException e) {
 
-            e.printStackTrace();
+            System.out.print(e.toString());
             return "0.0.0.0";
         }
     }
@@ -451,14 +436,14 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
 
         } catch (NoSuchObjectException e)
         {
-            e.printStackTrace();
+           System.out.print(e.toString());
             return "Fehler beim Stoppen des Servers!";
         } catch (NotBoundException nbe)
         {
-            nbe.printStackTrace();
+           System.out.print(nbe.toString());
             return "Fehler beim Stoppen des Servers!";
         } catch (RemoteException rex) {
-            rex.printStackTrace();
+           System.out.print(rex.toString());
             return "Fehler beim Stoppen des Servers!";
         }
 
