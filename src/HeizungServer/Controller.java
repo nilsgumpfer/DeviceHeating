@@ -1,5 +1,7 @@
 package HeizungServer;
 
+import de.thm.smarthome.global.beans.MeasureBean;
+import de.thm.smarthome.global.enumeration.EUnitOfMeasurement;
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -29,6 +31,10 @@ public class Controller {
     private Label lbl_Serverstatus;
     @FXML
     private Label lbl_srvmsg;
+    @FXML
+    private Button btn_setTemp;
+    @FXML
+    private Button btn_setdesiredTemp;
     @FXML
     private Button btn_starteServer;
     @FXML
@@ -120,39 +126,24 @@ public class Controller {
         }
     }
 
-    public void BTNSetTemp(ActionEvent event) {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Temperatur einstellen");
-        dialog.setHeaderText("Temperatur der Heizung einstellen");
-        dialog.setContentText("Bitte Temperatur der Heizung einstellen:");
-        Optional<String> result = dialog.showAndWait();
 
-        if (result.isPresent() == true && !result.get().equals("")) {
-            Double newTemp = Double.parseDouble(result.get());
-            System.out.println(newTemp);
-            heiz1.setTemperatureSrv(newTemp);
-        } else {
-            return;
-        }
-    }
-}
-
-    /*public void BTNSetMaxTemp(ActionEvent event){
+    public void BTNSetDesTemp(ActionEvent event) throws RemoteException{
         TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Maximale Temperatur einstellen");
-        dialog.setHeaderText("Maximale Temperatur der Heizung einstellen");
-        dialog.setContentText("Bitte maximale Temperatur der Heizung einstellen:");
+        dialog.setTitle("Gewünschte Temperatur einstellen");
+        dialog.setHeaderText("Gewünschte Temperatur der Heizung einstellen");
+        dialog.setContentText("Bitte gewünschte Temperatur der Heizung einstellen:");
         Optional<String> result = dialog.showAndWait();
 
         if(result.isPresent() == true && !result.get().equals("")) {
             Double newTemp = Double.parseDouble(result.get());
             System.out.println(newTemp);
-            heiz1.setMaxTemperatureSrv(newTemp);
+            heiz1.setDesiredTemperature(new MeasureBean(newTemp, heiz1.getCurrentTemperature().getUnitOfMeasurement_Enum()));
         }
         else{
             return;
         }
-    }*/
+    }
+}
 
     /*public void BTNSetMinTemp(ActionEvent event){
         TextInputDialog dialog = new TextInputDialog();
