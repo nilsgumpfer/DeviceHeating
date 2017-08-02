@@ -25,7 +25,7 @@ public interface HeizungServerInterface extends Remote {
     ModelVariantBean getModelVariant() throws RemoteException;
     String getGenericName() throws RemoteException;
     String getSerialNumber() throws RemoteException;
-    void attach(IObserver observer) throws RemoteException;
+    void attach(Object observer) throws RemoteException;
 
     /*public void setTemperature(double temperature, HeizungClientInterface c) throws RemoteException;
     public double getTemperature(HeizungClientInterface c) throws RemoteException;

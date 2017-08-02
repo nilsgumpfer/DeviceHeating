@@ -128,6 +128,7 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
         return this.serialNumber;
     }
 
+
     @Override
     public PowerStateBean getPowerState() throws RemoteException{
 
@@ -151,6 +152,7 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
         else if (desiredTemperature.getMeasure_Double() > currentTemperature.getMeasure_Double()){
         aufheizen();
 
+        //setCurrentTemperature(desiredTemperature);
     }}
 
     private void setCurrentTemperature(MeasureBean new_currentTemperature) {
@@ -159,9 +161,10 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
             @Override
             public void run() {
                 heizungstemperatur.set(String.valueOf(currentTemperature.getMeasure_Double()) + " " + currentTemperature.getUnitOfMeasurement_String());
+
             }
         });
-notifyObservers(this.currentTemperature);
+
     }
 
 
@@ -174,6 +177,7 @@ notifyObservers(this.currentTemperature);
 
                     MeasureBean new_currentTemperature = new MeasureBean(d, currentTemperature.getUnitOfMeasurement_Enum());
                     setCurrentTemperature(new_currentTemperature);
+                    notifyObservers(currentTemperature);
 
                     try {
                         Thread.sleep(500);
@@ -196,7 +200,7 @@ notifyObservers(this.currentTemperature);
 
                     MeasureBean new_currentTemperature = new MeasureBean(d, currentTemperature.getUnitOfMeasurement_Enum());
                     setCurrentTemperature(new_currentTemperature);
-
+                    notifyObservers(desiredTemperature);
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
@@ -396,7 +400,7 @@ notifyObservers(this.currentTemperature);
     }*/
 
     @Override
-    public void update(AObservable o, Object change) {
+    public void update(Object o, java.lang.Object change) {
 
     }
 

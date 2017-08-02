@@ -3,28 +3,36 @@ package de.thm.smarthome.global.observer;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
-/**
- * Created by Nils on 28.01.2017.
- */
 public abstract class AObservable {
-    private List<IObserver> attachedObservers = new ArrayList<>();
+    private List<Object> attachedObservers = new ArrayList<>();
+    public boolean changed = true;
 
-    public void attach(IObserver observer){
-        attachedObservers.add(observer);
+    public void attach(Object observer){
+        attachedObservers.add((IObserver)observer);
     }
 
-    public void detach(IObserver observer){
+    public void detach(Object observer){
         attachedObservers.remove(observer);
     }
 
     public void notifyObservers(Object change)  { //TODO: Ab hier nachverfolgen, ob Updates überhaupt beim SHManager ankommen
-        for (IObserver element:attachedObservers) {
+
+
+
+
+        for (Object element : attachedObservers) {
             try {
-                element.update(this,change);
+                IObserver myO = (IObserver) element;
+                myO.update(this, change);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
         }
+
     }
+
 }
+
+
