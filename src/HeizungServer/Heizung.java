@@ -46,6 +46,7 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
     private String serialNumber = null;
     public String servername = "SmartHomeAPI";
     private String serverIP;
+    private HeizungServerInterface stub = null;
 
     public String serverstatus = null;
     public int serverport = 1099;
@@ -91,11 +92,6 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
     public MeasureBean getDesiredTemperature() throws RemoteException{
 
         return desiredTemperature;
-    }
-
-    public double getTemperatureSrv() throws RemoteException {
-
-        return this.temperature;
     }
 
     @Override
@@ -204,6 +200,7 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
+                    System.out.print(e.toString());
                     }
                 }
             }
@@ -364,9 +361,11 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
     public String startServer() throws RemoteException {
         serverIP = getServerIP();
         System.setProperty("java.rmi.server.hostname", serverIP);
-        HeizungServerInterface stub = (HeizungServerInterface) UnicastRemoteObject.exportObject(this, 0);
-        rmiRegistry = LocateRegistry.createRegistry(serverport);
+        if(stub == null) {
+            stub = (HeizungServerInterface) UnicastRemoteObject.exportObject(this, 0);
 
+        }
+        rmiRegistry = LocateRegistry.createRegistry(serverport);
         try {
             /*if (System.getSecurityManager() == null) {
                 System.setProperty("java.security.policy", "file:C:\\Users\\Tim\\IdeaProjects\\HeizungServer\\out\\production\\HeizungServer\\HeizungServer\\server.policy");

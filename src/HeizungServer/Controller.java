@@ -72,9 +72,9 @@ public class Controller {
 
         if (heiz1 == null) {
             heiz1 = new Heizung();
-        } else {
+        } /*else {
             heiz1 = new Heizung();
-        }
+        }*/
 
         ps = new PrintStream(new OutputStream() {
 
