@@ -16,6 +16,22 @@ public class PowerStateBean implements Serializable{
         lookUpString();
     }
 
+    public PowerStateBean(String powerState) {
+        switch (powerState) {
+            case "NA":
+                powerState_Enum = EPowerState.NA;
+                break;
+            case "ON":
+                powerState_Enum = EPowerState.ON;
+                break;
+            case "OFF":
+                powerState_Enum = EPowerState.OFF;
+                break;
+        }
+
+        lookUpString();
+    }
+
     public PowerStateBean(boolean powerState) {
         if(powerState)
             powerState_Enum = EPowerState.ON;

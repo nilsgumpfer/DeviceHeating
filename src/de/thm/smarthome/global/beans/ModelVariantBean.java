@@ -43,23 +43,55 @@ public class ModelVariantBean implements Serializable{
             case HEATING_1000:
                 modelVariant_String = "Heizung1000X2";
                 break;
+            case Shutter3000:
+                modelVariant_String = "Shutter3000";
+                break;
+            case Shutter2000:
+                modelVariant_String = "Shutter2000";
+                break;
+            case Shutter1000:
+                modelVariant_String = "Shutter1000";
+                break;
+            case Thermometer3000:
+                modelVariant_String = "Thermometer3000";
+                break;
+            case WeatherStation3000:
+                modelVariant_String = "WeatherStation3000";
+                break;
         }
     }
 
     private void lookUpEnum(){
         switch (modelVariant_String){
             case "NA":
-                modelVariant_String = "N/A";
+                modelVariant_Enum = EModelVariant.NA;
                 break;
-            case "HEATING_3000":
-                modelVariant_String = "Heizung3000X2";
+            case "Heizung3000X2":
+                modelVariant_Enum = EModelVariant.HEATING_3000;
                 break;
-            case "HEATING_2000":
-                modelVariant_String = "Heizung2000X2";
+            case "Heizung2000X2":
+                modelVariant_Enum = EModelVariant.HEATING_2000;
                 break;
-            case "HEATING_1000":
-                modelVariant_String = "Heizung1000X2";
+            case "Heizung1000X2":
+                modelVariant_Enum = EModelVariant.HEATING_1000;
                 break;
+            case "Shutter3000":
+                modelVariant_Enum = EModelVariant.Shutter3000;
+                break;
+            case "Shutter2000":
+                modelVariant_Enum = EModelVariant.Shutter2000;
+                break;
+            case "Shutter1000":
+                modelVariant_Enum = EModelVariant.Shutter1000;
+                break;
+            case "Thermometer3000":
+                modelVariant_Enum = EModelVariant.Thermometer3000;
+                break;
+            case "WeatherStation3000":
+                modelVariant_Enum = EModelVariant.WeatherStation3000;
+                break;
+            default:
+                modelVariant_Enum = EModelVariant.NA;
         }
     }
 }

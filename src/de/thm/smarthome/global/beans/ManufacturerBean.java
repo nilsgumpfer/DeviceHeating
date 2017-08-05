@@ -45,10 +45,10 @@ public class ManufacturerBean implements Serializable{
                 deviceManufacturer_String = "Vaillant";
                 break;
             case CONRAD_ELECTRONIC:
-                deviceManufacturer_String = "Conrad Electronic";
+                deviceManufacturer_String = "ConradElectronic";
                 break;
             case ELECTRIC_COMPANY:
-                deviceManufacturer_String = "Electric Company";
+                deviceManufacturer_String = "ElectricCompany";
                 break;
         }
     }
@@ -58,18 +58,23 @@ public class ManufacturerBean implements Serializable{
             case "NA":
                 deviceManufacturer_Enum = EDeviceManufacturer.NA;
                 break;
+            case "Viessmann":
             case "VIESSMANN":
                 deviceManufacturer_Enum = EDeviceManufacturer.VIESSMANN;
                 break;
+            case "Buderus":
             case "BUDERUS":
                 deviceManufacturer_Enum = EDeviceManufacturer.BUDERUS;
                 break;
+            case "Vaillant":
             case "VAILLANT":
                 deviceManufacturer_Enum = EDeviceManufacturer.VAILLANT;
                 break;
+            case "ConradElectronic":
             case "CONRAD_ELECTRONIC":
                 deviceManufacturer_Enum = EDeviceManufacturer.CONRAD_ELECTRONIC;
                 break;
+            case "ElectricCompany":
             case "ELECTRIC_COMPANY":
                 deviceManufacturer_Enum = EDeviceManufacturer.ELECTRIC_COMPANY;
                 break;

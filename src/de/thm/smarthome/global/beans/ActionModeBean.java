@@ -16,6 +16,40 @@ public class ActionModeBean implements Serializable{
         lookUpString();
     }
 
+    public ActionModeBean(String actionMode){
+        switch (actionMode){
+            case "DAYMODE":
+                actionMode_Enum = EActionMode.DAYMODE;
+                break;
+            case "NIGHTMODE":
+                actionMode_Enum = EActionMode.NIGHTMODE;
+                break;
+            case "MAINTENANCEMODE":
+                actionMode_Enum = EActionMode.MAINTENANCEMODE;
+                break;
+            case "STANDARDMODE":
+                actionMode_Enum = EActionMode.STANDARDMODE;
+                break;
+            case "FAHRENHEIT":
+                actionMode_Enum = EActionMode.FAHRENHEIT;
+                break;
+            case "CELSIUS":
+                actionMode_Enum = EActionMode.CELSIUS;
+                break;
+            case "ANGLOAMERICAN":
+                actionMode_Enum = EActionMode.ANGLOAMERICAN;
+                break;
+            case "METRIC":
+                actionMode_Enum = EActionMode.METRIC;
+                break;
+            case "NA":
+                actionMode_Enum = EActionMode.NA;
+                break;
+        }
+
+        lookUpString();
+    }
+
     public EActionMode getActionMode_Enum() {
         return actionMode_Enum;
     }
@@ -34,6 +68,21 @@ public class ActionModeBean implements Serializable{
                 break;
             case MAINTENANCEMODE:
                 actionMode_String = "Maintenancemode";
+                break;
+            case STANDARDMODE:
+                actionMode_String = "Standardmode";
+                break;
+            case FAHRENHEIT:
+                actionMode_String = "Fahrenheit";
+                break;
+            case CELSIUS:
+                actionMode_String = "Celsius";
+                break;
+            case ANGLOAMERICAN:
+                actionMode_String = "Angloamerican";
+                break;
+            case METRIC:
+                actionMode_String = "Metric";
                 break;
             case NA:
                 actionMode_String = "N/A";
