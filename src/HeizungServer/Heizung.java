@@ -194,12 +194,14 @@ public class Heizung extends AObservable implements IObserver, HeizungServerInte
     @Override
     public void setGenericName(String genericName)throws RemoteException{
         this.genericName = genericName;
+        notifyObservers(genericName);
     }
 
     @Override
     public void setPowerState(PowerStateBean new_powerState) throws RemoteException{
 
         powerState = new_powerState;
+        notifyObservers(powerState);
 
     }
 
